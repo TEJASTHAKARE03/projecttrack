@@ -1,5 +1,9 @@
-// server.js — Nova build (Mongo Atlas + stats + validation)
-require("dotenv").config();
+// server.js â€" Nova build (Mongo Atlas + stats + validation)
+// Only use dotenv in development
+if (process.env.NODE_ENV !== 'production') {
+  require("dotenv").config();
+}
+
 const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
@@ -11,9 +15,19 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname))); // serve html & assets in this folder
 
-// ---- Mongo connection ----
+// ---- Debug Environment Variables ----
+console.log("=== ENVIRONMENT DEBUG ===");
+console.log("NODE_ENV:", process.env.NODE_ENV);
+console.log("RAILWAY_ENVIRONMENT:", process.env.RAILWAY_ENVIRONMENT);
+console.log("MONGODB_URI exists:", !!process.env.MONGODB_URI);
+console.log("MONGO_URL exists:", !!process.env.MONGO_URL);
+console.log("Available MongoDB env vars:", Object.keys(process.env).filter(key => key.toLowerCase().includes('mongo')));
+console.log("========================");
 
+// ---- Mongo connection ----
 const uri = process.env.MONGODB_URI || process.env.MONGO_URL || "mongodb://localhost:27017/tracker";
+console.log("Using MongoDB URI:", uri.substring(0, 50) + "...");
+
 mongoose
   .connect(uri, {
     dbName: "tracker",
@@ -21,7 +35,7 @@ mongoose
     socketTimeoutMS: 45000,
     family: 4, // prefer IPv4 (Windows DNS stability)
   })
-  .then(() => console.log("MongoDB connected"))
+  .then(() => console.log("MongoDB connected successfully"))
   .catch((e) => console.error("MongoDB error:", e.message));
 mongoose.connection.on("error", (e) =>
   console.error("Mongoose connection error:", e?.message || e)
@@ -114,32 +128,39 @@ const Issue = mongoose.model("Issue", IssueSchema);
 
 // seed
 (async () => {
-  if ((await Staff.countDocuments()) === 0) {
-    await Staff.insertMany([
-      { name: "Front Desk" },
-      { name: "PPF Lead" },
-      { name: "Workshop Manager" },
-      { name: "Sales — Ayesha" },
-      { name: "Sales — Rohan" },
-    ]);
+  try {
+    if ((await Staff.countDocuments()) === 0) {
+      await Staff.insertMany([
+        { name: "Front Desk" },
+        { name: "PPF Lead" },
+        { name: "Workshop Manager" },
+        { name: "Sales â€" Ayesha" },
+        { name: "Sales â€" Rohan" },
+      ]);
+      console.log("Staff seeded successfully");
+    }
+    if ((await Service.countDocuments()) === 0) {
+      await Service.insertMany([
+        { name: "Paint Protection Film" },
+        { name: "Ceramic Coating" },
+        { name: "Detailing" },
+      ]);
+      console.log("Services seeded successfully");
+    }
+    if ((await Category.countDocuments()) === 0) {
+      await Category.insertMany([
+        { name: "PPF â€" Peeling" },
+        { name: "PPF â€" Bubbles" },
+        { name: "Coating â€" Haze" },
+        { name: "Fitment â€" Rattling" },
+        { name: "Other" },
+      ]);
+      console.log("Categories seeded successfully");
+    }
+  } catch (error) {
+    console.error("Seeding error:", error.message);
   }
-  if ((await Service.countDocuments()) === 0) {
-    await Service.insertMany([
-      { name: "Paint Protection Film" },
-      { name: "Ceramic Coating" },
-      { name: "Detailing" },
-    ]);
-  }
-  if ((await Category.countDocuments()) === 0) {
-    await Category.insertMany([
-      { name: "PPF — Peeling" },
-      { name: "PPF — Bubbles" },
-      { name: "Coating — Haze" },
-      { name: "Fitment — Rattling" },
-      { name: "Other" },
-    ]);
-  }
-})().catch(console.error);
+})();
 
 // helpers
 const safeCreate = (Model) => async (req, res) => {
@@ -266,4 +287,4 @@ app.get("/api/stats", async (_req, res) => {
 app.get("/", (_req, res) => res.sendFile(path.join(__dirname, "index.html")));
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log("Server running on http://localhost:" + PORT));
+app.listen(PORT, '0.0.0.0', () => console.log(`Server running on http://localhost:${PORT}`));
