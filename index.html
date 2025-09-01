@@ -7,55 +7,136 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
-    html,body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
-    .nova{min-height:100vh;color:#fff;background:
-      radial-gradient(1200px 600px at 20% -20%, rgba(229,9,20,.16), transparent),
-      radial-gradient(1100px 540px at 120% 10%, rgba(229,9,20,.10), transparent),
-      #0c0c0f;}
-    .cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px;align-items:stretch}
-    .card{position:relative;border-radius:18px;background:linear-gradient(180deg,#111214,#0c0c10);border:1px solid rgba(255,255,255,.06);
-      box-shadow:0 20px 50px rgba(0,0,0,.45);display:flex}
-    .card:hover{transform:translateY(-3px);border-color:rgba(229,9,20,.35);box-shadow:0 28px 70px rgba(229,9,20,.18),0 18px 40px rgba(0,0,0,.55);transition:.25s}
-    .card-body{padding:22px;display:flex;flex-direction:column;width:100%}
-    .pill{display:inline-flex;align-items:center;border-radius:999px;padding:.35rem .7rem;font-weight:700;font-size:.78rem}
-    .pill.red{background:linear-gradient(180deg,#ef4444,#a60711);border:1px solid rgba(229,9,20,.55)}
-    .pill.muted{background:#191a1f;border:1px solid #2b2c33;color:#e5e7eb}
-    .stretched{position:absolute;inset:0;border-radius:inherit;outline:none}
-    .stretched:focus-visible{box-shadow:0 0 0 3px rgba(229,9,20,.45) inset}
+    html, body {
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      min-height: 100vh;
+      color: #fff;
+      background:
+        radial-gradient(1200px 600px at 20% -20%, rgba(229,9,20,.16), transparent),
+        radial-gradient(1100px 540px at 120% 10%, rgba(229,9,20,.10), transparent),
+        #0c0c0f;
+    }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Increased min-width for better spacing */
+      gap: 24px; /* Slightly increased gap */
+      align-items: stretch;
+    }
+    .card {
+      position: relative;
+      border-radius: 18px;
+      background: linear-gradient(180deg, #111214, #0c0c10);
+      border: 1px solid rgba(255, 255, 255, .06);
+      box-shadow: 0 20px 50px rgba(0,0,0,.45);
+      display: flex;
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; /* Smoother transition */
+    }
+    .card:hover {
+      transform: translateY(-5px); /* More pronounced lift */
+      border-color: rgba(229,9,20,.45);
+      box-shadow: 0 28px 70px rgba(229,9,20,.2), 0 18px 40px rgba(0,0,0,.6);
+    }
+    .card-body {
+      padding: 24px; /* Increased padding */
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+    .card-title {
+        font-size: 1.1rem; /* Larger title */
+        font-weight: 800;
+    }
+    .card-description {
+        font-size: 0.95rem; /* Larger description */
+        color: #aab2c0; /* Lighter color for better contrast */
+        margin-top: 0.5rem;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 0.4rem 0.8rem;
+      font-weight: 700;
+      font-size: 0.8rem;
+    }
+    .pill.red {
+      background: linear-gradient(180deg, #ef4444, #b91c1c);
+      border: 1px solid rgba(229,9,20,.55);
+    }
+    .pill.muted {
+      background: #1f2128;
+      border: 1px solid #30323b;
+      color: #e5e7eb;
+    }
+    .pill.live {
+        background-color: #10b981;
+        color: white;
+        border: 1px solid #059669;
+    }
+    .stretched {
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      outline: none;
+    }
+    .stretched:focus-visible {
+      box-shadow: 0 0 0 3px rgba(229,9,20,.45) inset;
+    }
   </style>
 </head>
 <body class="nova">
-  <header class="max-w-6xl mx-auto px-4 py-6 flex items-center gap-3">
-    <div class="h-10 w-10 rounded-xl bg-red-600 grid place-content-center text-white font-extrabold">RS</div>
+  <header class="max-w-6xl mx-auto px-4 py-8 flex items-center gap-4"> <!-- Increased padding and gap -->
+    <div class="h-12 w-12 rounded-xl bg-red-600 grid place-content-center text-white font-extrabold text-lg">RS</div>
     <div>
-      <div class="text-xl font-extrabold">RS Dashboard</div>
-      <div class="text-xs text-slate-400">PPF Sales & Service Suite</div>
+      <div class="text-2xl font-extrabold">RS Dashboard</div>
+      <div class="text-sm text-slate-400">PPF Sales & Service Suite</div>
     </div>
   </header>
 
-  <main class="max-w-6xl mx-auto px-4 pb-10">
+  <main class="max-w-6xl mx-auto px-4 pb-12">
     <section class="cards-grid">
-      <article class="card"><a class="stretched" href="callfollowup.html" aria-label="Open Call Follow-Up"></a>
+      <article class="card">
+        <a class="stretched" href="callfollowup.html" aria-label="Open Call Follow-Up"></a>
         <div class="card-body">
-          <div class="flex items-center justify-between"><h3 class="font-extrabold">Call Follow-Up</h3><span id="kpi-today" class="pill red">0 Today</span></div>
-          <p class="text-slate-300/90 mt-1">Log calls, assign follow-ups & view live KPIs.</p>
-          <div class="mt-auto pt-5 flex justify-between"><span id="kpi-open" class="pill muted">0 Open</span><span id="kpi-completion" class="pill muted">0% Done</span></div>
+          <div class="flex items-center justify-between">
+            <h3 class="card-title">Call Follow-Up</h3>
+            <span id="kpi-today" class="pill red">0 Today</span>
+          </div>
+          <p class="card-description">Log calls, assign follow-ups & view live KPIs.</p>
+          <div class="mt-auto pt-60 flex justify-between">
+            <span id="kpi-open" class="pill muted">0 Open</span>
+            <span id="kpi-completion" class="pill muted">0% Done</span>
+          </div>
         </div>
       </article>
 
-      <article class="card"><a class="stretched" href="customerreq.html" aria-label="Open Customer Requirement"></a>
+      <article class="card">
+        <a class="stretched" href="customerreq.html" aria-label="Open Customer Requirement"></a>
         <div class="card-body">
-          <div class="flex items-center justify-between"><h3 class="font-extrabold">Customer Requirement</h3><span id="kpi-requests" class="pill red">0 Leads</span></div>
-          <p class="text-slate-300/90 mt-1">Capture new requirements & review recent leads.</p>
-          <div class="mt-auto pt-5 flex justify-between"><span id="kpi-frequent" class="pill muted">0 Frequent</span><span class="pill muted">Live</span></div>
+          <div class="flex items-center justify-between">
+            <h3 class="card-title">Customer Requirement</h3>
+            <span id="kpi-requests" class="pill red">0 Leads</span>
+          </div>
+          <p class="card-description">Capture new requirements & review recent leads.</p>
+          <div class="mt-auto pt-60 flex justify-between">
+            <span id="kpi-frequent" class="pill muted">0 Frequent</span>
+            <span class="pill live">Live</span>
+          </div>
         </div>
       </article>
 
-      <article class="card"><a class="stretched" href="serviceissuetracker.html" aria-label="Open Service Issue Tracker"></a>
+      <article class="card">
+        <a class="stretched" href="serviceissuetracker.html" aria-label="Open Service Issue Tracker"></a>
         <div class="card-body">
-          <div class="flex items-center justify-between"><h3 class="font-extrabold">Service Issue Tracker</h3><span id="kpi-issues" class="pill red">0 Issues</span></div>
-          <p class="text-slate-300/90 mt-1">Record & prioritize service issues with due dates.</p>
-          <div class="mt-auto pt-5 flex justify-between"><span class="pill muted">Resolve Fast</span><span class="pill muted">Team View</span></div>
+          <div class="flex items-center justify-between">
+            <h3 class="card-title">Service Issue Tracker</h3>
+            <span id="kpi-issues" class="pill red">0 Issues</span>
+          </div>
+          <p class="card-description">Record & prioritize service issues with due dates.</p>
+          <div class="mt-auto pt-60 flex justify-between">
+            <span class="pill muted">Resolve Fast</span>
+            <span class="pill muted">Team View</span>
+          </div>
         </div>
       </article>
     </section>
@@ -63,16 +144,35 @@
 
   <script src="script.js"></script>
   <script>
+    // This script remains unchanged as the element IDs are the same.
     (async function(){
-      try{
+      try {
+        // Helper to safely update text content
+        const setText = (id, text) => {
+          const el = document.getElementById(id);
+          if (el) el.textContent = text;
+        };
+
+        // Helper to fetch JSON data
+        const getJSON = async (url) => {
+          const response = await fetch(url);
+          if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+          return response.json();
+        };
+
+        // Fetch all stats and update KPIs
         const s = await getJSON('/api/stats');
         setText('kpi-today', `${s.todaysCalls ?? 0} Today`);
         setText('kpi-open', `${s.openFollowups ?? 0} Open`);
         setText('kpi-completion', `${s.completionRate ?? 0}% Done`);
         setText('kpi-frequent', `${(s.frequentCallers||[]).length ?? 0} Frequent`);
-        getJSON('/api/requests').then(d=>setText('kpi-requests', `${d.length||0} Leads`)).catch(()=>{});
-        getJSON('/api/issues').then(d=>setText('kpi-issues', `${d.length||0} Issues`)).catch(()=>{});
-      }catch(e){}
+
+        // Fetch other stats individually
+        getJSON('/api/requests').then(d => setText('kpi-requests', `${d.length||0} Leads`)).catch(console.error);
+        getJSON('/api/issues').then(d => setText('kpi-issues', `${d.length||0} Issues`)).catch(console.error);
+      } catch(e) {
+        console.error("Failed to load dashboard stats:", e);
+      }
     })();
   </script>
 </body>
