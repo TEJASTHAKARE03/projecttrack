@@ -134,8 +134,8 @@ const Issue = mongoose.model("Issue", IssueSchema);
         { name: "Front Desk" },
         { name: "PPF Lead" },
         { name: "Workshop Manager" },
-        { name: "Sales â€" Ayesha" },
-        { name: "Sales â€" Rohan" },
+        { name: "Sales - Ayesha" },
+        { name: "Sales - Rohan" },
       ]);
       console.log("Staff seeded successfully");
     }
@@ -149,10 +149,10 @@ const Issue = mongoose.model("Issue", IssueSchema);
     }
     if ((await Category.countDocuments()) === 0) {
       await Category.insertMany([
-        { name: "PPF â€" Peeling" },
-        { name: "PPF â€" Bubbles" },
-        { name: "Coating â€" Haze" },
-        { name: "Fitment â€" Rattling" },
+        { name: "PPF - Peeling" },
+        { name: "PPF - Bubbles" },
+        { name: "Coating - Haze" },
+        { name: "Fitment - Rattling" },
         { name: "Other" },
       ]);
       console.log("Categories seeded successfully");
